@@ -1,9 +1,11 @@
 package fantasy.player;
 
+import fantasy.Team;
+
 public interface Player {
     void initializeStats();
     String getName();
-    Team getTeam();
+    NHLTeam getTeam();
     Position getPosition();
     double getDailyFantasyPoints();
     double getCumulativeFantasyPoints();

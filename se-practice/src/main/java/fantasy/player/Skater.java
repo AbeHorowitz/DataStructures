@@ -8,11 +8,11 @@ public class Skater implements Player {
     private int goals;
     private int assists;
     private int plusMinus;
-    private Team team;
+    private NHLTeam team;
     private Position position;
     private Map<String, Integer> totalStats;
 
-    public Skater(String name, Team team, Position position) {
+    public Skater(String name, NHLTeam team, Position position) {
         this.name = name;
         this.team = team;
         this.position = position;
@@ -30,7 +30,7 @@ public class Skater implements Player {
     }
 
     @Override
-    public Team getTeam() {
+    public NHLTeam getTeam() {
         return this.team;
     }
 

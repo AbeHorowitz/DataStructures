@@ -4,14 +4,14 @@ import java.util.HashMap;
 
 public class Goalie implements Player{
     private String name;
-    private Team team;
+    private NHLTeam team;
     private Position position;
     private HashMap<String, Integer> dailyStats;
     private HashMap<String, Integer> totalStats;
     private int dailyFantasyPoints;
     private double totalFantasyPoints;
 
-    protected Goalie(String name, Team team, Position position){
+    protected Goalie(String name, NHLTeam team, Position position){
         this.name = name;
         this.team = team;
         this.position = position;
@@ -36,7 +36,7 @@ public class Goalie implements Player{
     }
 
     @Override
-    public Team getTeam() {
+    public NHLTeam getTeam() {
         return this.team;
     }
 
