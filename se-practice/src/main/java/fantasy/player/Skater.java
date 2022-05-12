@@ -12,16 +12,18 @@ public class Skater implements Player {
     private Position position;
     private Map<String, Integer> totalStats;
 
-    public Skater(String name, NHLTeam team, Position position) {
+    protected Skater(String name, NHLTeam team, Position position) {
         this.name = name;
         this.team = team;
         this.position = position;
-        this.initializeStats();
-    }
-
-    @Override
-    public void initializeStats() {
-        this.totalStats = new HashMap<>();
+        this.goals = 0;
+        this.assists = 0;
+        this.plusMinus = 0;
+        this.totalStats = new HashMap<>() {{
+            put("goals", 0);
+            put("assists", 0);
+            put("plusMinus", 0);
+        }};
     }
 
     @Override
@@ -40,12 +42,64 @@ public class Skater implements Player {
     }
 
     @Override
+    public void setStats(String stat, int num) {
+        switch (stat) {
+            case "goals":
+                this.goals = num;
+                this.totalStats.replace(stat, this.totalStats.get(stat) + num);
+                break;
+            case "assists":
+                this.assists = num;
+                this.totalStats.replace(stat, this.totalStats.get(stat) + num);
+                break;
+            case "plusMinus":
+                this.plusMinus = num;
+                this.totalStats.replace(stat, this.totalStats.get(stat) + num);
+                break;
+        }
+    }
+
+    public int getGoals() {
+        return this.goals;
+    }
+
+    public int getAssists() {
+        return this.assists;
+    }
+
+    public int getPlusMinus() {
+        return this.plusMinus;
+    }
+
+    @Override
     public double getDailyFantasyPoints() {
-        return 0;
+        int goals = this.getGoals();
+        int assists = this.getAssists();
+        int plusMinus = this.getPlusMinus();
+        return (goals * 3) + (assists * 2) + plusMinus;
     }
 
     @Override
     public double getCumulativeFantasyPoints() {
-        return 0;
+        double points = 0;
+        for (String stat : this.totalStats.keySet()) {
+            switch (stat) {
+                case "goals":
+                    points += 3 * this.totalStats.get(stat);
+                    break;
+                case "assists":
+                    points += 2 * this.totalStats.get(stat);
+                    break;
+                case "plusMinus":
+                    points += this.totalStats.get(stat);
+                    break;
+            }
+        }
+        return points;
+    }
+
+    @Override
+    public boolean onTeam() {
+        return false;
     }
 }
